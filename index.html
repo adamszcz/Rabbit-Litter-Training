@@ -46,7 +46,7 @@
 
         var log = $("<input>").attr({id: "log", type: "button", value: "Log"}).css({marginTop: "30px"}).addClass("btn btn primary").appendTo("#formentry");
     
-    var options = $("<div>").attr({id: "options"}).addClass("col-10 mx-auto").appendTo("#interface");
+    var options = $("<div>").attr({id: "options"}).addClass("col-10 mx-auto").css({textAlign: "center"}).appendTo("#interface");
         var nuke = $("<input>").attr({id: "nuke", type: "button", value: "Nuke all logs"}).css({fontSize: "10px", margin: "10px", backgroundColor: "black", color: "white"}).addClass("btn").appendTo("#options");
         var graph = $("<input>").attr({id: "graph", type: "button", value: "View graph"}).css({fontSize: "10px", margin: "10px", backgroundColor: "black", color: "white"}).addClass("btn").appendTo("#options");
         
@@ -58,7 +58,19 @@
     });
   
     $("#nuke").click(function clearAll() {
-       localStorage.clear();
+        var confirm = window.confirm("Are you sure? This will delete ALL records and cannot be undone.");
+        if (confirm == true) {
+            localStorage.clear();
+            $("#dataport").remove();
+        }else{
+            return false;
+        }
+    });
+
+    $("#graph").click(function showData() {
+        var storedData = {...localStorage};
+        var parsedData = JSON.stringify(storedData, null, 4);
+        var dataPort = $("<div>").attr({id: "dataport"}).addClass("card").css({marginTop: "20px", backgroundColor: "#4073ce", padding: "5px"}).text(parsedData).appendTo("#interface");
     });
     </script>
 </body>
