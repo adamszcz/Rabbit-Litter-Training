@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Cereal and Arya Litter Training</title>
+</head>
+<style>
+    body {
+        background-color: cornflowerblue;
+    }
+    input, select {
+        margin-bottom: 5px;
+    }
+</style>
+<body>
+    <div id="main" class="comtainer-flex"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    var peeOptions = ["None", "A couple of spots", "Many spots", "God dammit bunnies!"];
+    var cageOptions = ["Cage cleaned", "Litter box cleaned", "Cage and litter box cleaned", "No cleaning done"];
+
+    var header = $("<header>").addClass("jumbotron").attr({id: "main"}).css({backgroundColor: "turquoise", textAlign: "center", fontSize: "30px", fontWeight: "700"}).text("Cereal and Arya Litter Training").appendTo("#main");
+    
+    var interface = $("<div>").addClass("col-sm-10 mx-auto").attr({id: "interface"}).css({color: "whitesmoke", fontSize: "20px"}).appendTo("#main");
+    
+    var formEntry = $("<form>").addClass("card form-group").attr({id: "formentry"}).css({backgroundColor: "#4073ce", padding: "5px"}).text("Fill in the following and hit 'Log'").appendTo("#interface");
+        var numPoopsL = $("<label>").text("About how many poops were there?").css({color: "#e8baff", fontSize: "10px"}).appendTo("#formentry");
+        var numPoops = $("<input>").addClass("form-control").attr({id: "numpoops", placeholder: "enter number"}).appendTo("#formentry");
+        
+        var peeL = $("<label>").text("What is the pee situation?").css({color: "#e8baff", fontSize: "10px"}).appendTo("#formentry");
+        var pee = $("<select>").addClass("form-control").attr({id: "pee"}).appendTo("#formentry");
+        for (var i=0; i<peeOptions.length; i++) { 
+            var peeOp = $("<option>").attr({id: "peeop " + i}).text(peeOptions[i]).appendTo("#pee");
+        }
+
+        var cageCleanedL = $("<label>").text("Was the cage or litter box cleaned?").css({color: "#e8baff", fontSize: "10px"}).appendTo("#formentry");
+        var cageCleaned = $("<select>").addClass("form-control").attr({id: "cleaning"}).appendTo("#formentry");
+        for (var i=0; i<cageOptions.length; i++) { 
+            var cageOp = $("<option>").attr({id: "cageop " + i}).text(cageOptions[i]).appendTo("#cleaning");
+        }
+
+        var log = $("<input>").attr({id: "log", type: "button", value: "Log"}).css({marginTop: "30px"}).addClass("btn btn primary").appendTo("#formentry");
+    
+    var options = $("<div>").attr({id: "options"}).addClass("col-10 mx-auto").appendTo("#interface");
+        var nuke = $("<input>").attr({id: "nuke", type: "button", value: "Nuke all logs"}).css({fontSize: "10px", margin: "10px", backgroundColor: "black", color: "white"}).addClass("btn").appendTo("#options");
+        var graph = $("<input>").attr({id: "graph", type: "button", value: "View graph"}).css({fontSize: "10px", margin: "10px", backgroundColor: "black", color: "white"}).addClass("btn").appendTo("#options");
+        
+    $("#log").click(function logData() { 
+        var date = new Date();
+        var data = {"poops":$("#numpoops").val(), "pee":$("#pee").val(), "cage":$("#cleaning").val()};
+        var dataString = JSON.stringify(data);
+        var store = localStorage.setItem(date, dataString);
+    });
+  
+    $("#nuke").click(function clearAll() {
+       localStorage.clear();
+    });
+    </script>
+</body>
+</html>
