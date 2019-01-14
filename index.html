@@ -52,9 +52,10 @@
         
     $("#log").click(function logData() { 
         var date = new Date();
-        var data = {"poops":$("#numpoops").val(), "pee":$("#pee").val(), "cage":$("#cleaning").val()};
+        var data = {"Poops":$("#numpoops").val(), "Pee":$("#pee").val(), "Cage":$("#cleaning").val()};
         var dataString = JSON.stringify(data);
         var store = localStorage.setItem(date, dataString);
+        alert("Data entered successfully!");
     });
   
     $("#nuke").click(function clearAll() {
@@ -68,9 +69,13 @@
     });
 
     $("#graph").click(function showData() {
-        var storedData = {...localStorage};
-        var parsedData = JSON.stringify(storedData, null, 4);
-        var dataPort = $("<div>").attr({id: "dataport"}).addClass("card").css({marginTop: "20px", backgroundColor: "#4073ce", padding: "5px"}).text(parsedData).appendTo("#interface");
+        var dataPort = $("<table>").addClass("table").attr({id: "dataport"}).addClass("card").css({marginTop: "20px", backgroundColor: "#4073ce", padding: "5px"}).appendTo("#interface");
+        for (var i=0; i<localStorage.length; i++) { 
+            var parse = JSON.parse(localStorage.getItem(localStorage.key(i)))
+            var dataPort1 = $("<tr>").attr({id: "datakey "+i}).css({fontSize: "15px", color: "#e8baff"}).text(localStorage.key(i)).appendTo("#dataport");
+            var dataPort2 = $("<td>").attr({id: "dataval "+i}).css({fontSize: "10px"}).html("Poops: "+parse.Poops+"<br>Pee situation: "+parse.Pee+"<br>Cage: "+parse.Cage).appendTo("#dataport");
+        }
+        console.log(localStorage.key(1).poops);
     });
     </script>
 </body>
